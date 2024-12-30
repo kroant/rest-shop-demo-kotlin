@@ -85,17 +85,23 @@ class RestResponseEntityExceptionHandler {
             )
         )
 
-    private fun mapToErrorDetail(objectError: ObjectError) =
-        ErrorDetailDto(
+    private fun mapToErrorDetail(objectError: ObjectError): ErrorDetailDto {
+        val code = objectError.code
+        return ErrorDetailDto(
             field = if (objectError is FieldError) objectError.field else null,
             message = objectError.defaultMessage,
-            values = listOf(
-                ErrorDetailValueDto(
-                    type = VALIDATION_CODE,
-                    value = objectError.code
-                )
-            )
+            values =
+                if (code.isNullOrEmpty())
+                    emptyList()
+                else
+                    listOf(
+                        ErrorDetailValueDto(
+                            type = VALIDATION_CODE,
+                            value = code
+                        )
+                    )
         )
+    }
 
     private fun mapToDetailValues(exception: IllegalOrderStateException) =
         listOf(

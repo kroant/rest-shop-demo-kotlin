@@ -1,0 +1,15 @@
+server:
+  servlet:
+    context-path: /rest-shop-demo
+spring:
+  jpa:
+    open-in-view: false
+    show-sql: false
+    hibernate.ddl-auto: none
+  datasource:
+    url: jdbc:h2:mem:demodb
+app:
+  scheduling:
+    order-cancellation:
+      cron: 0 * * * * *
+      new-order-retention-duration: PT30M

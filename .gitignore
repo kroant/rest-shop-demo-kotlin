@@ -1,0 +1,13 @@
+# Gradle
+.gradle
+.cache
+build/
+
+# IntelliJ
+*.iml
+*.iws
+*.ipr
+.idea/
+
+# Others
+.kotlin/

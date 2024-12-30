@@ -39,7 +39,8 @@ class OrderService(
 ) {
 
     @Transactional(readOnly = true)
-    fun findAll() = orderRepository.findAll().map { orderResponseDtoMapper.mapFrom(it) }
+    fun findAll() =
+        orderRepository.findAllByOrderByStateAscCreatedOnDesc().map { orderResponseDtoMapper.mapFrom(it) }
 
     @Transactional(readOnly = true)
     fun getById(id: UUID) = orderRepository.findByIdOrNull(id)

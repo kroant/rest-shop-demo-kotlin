@@ -5,7 +5,9 @@ import cz.kromer.restshopdemo.exception.RootEntityNotFoundException
 import cz.kromer.restshopdemo.mapper.ProductDtoMapper
 import cz.kromer.restshopdemo.mapper.ProductMapper
 import cz.kromer.restshopdemo.repository.ProductRepository
+import org.springframework.dao.ConcurrencyFailureException
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -32,15 +34,17 @@ class ProductService(
         return checkNotNull(entity.id)
     }
 
+    @Retryable(retryFor = [ConcurrencyFailureException::class])
     @Transactional
     fun update(id: UUID, product: ProductDto) {
-        val entity = productRepository.findByIdOrNull(id) ?: throw RootEntityNotFoundException(id)
+        val entity = productRepository.findAndLockById(id) ?: throw RootEntityNotFoundException(id)
         productMapper.mapToProduct(product, entity)
     }
 
+    @Retryable(retryFor = [ConcurrencyFailureException::class])
     @Transactional
     fun delete(id: UUID) {
-        val entity = productRepository.findByIdOrNull(id) ?: throw RootEntityNotFoundException(id)
+        val entity = productRepository.findAndLockById(id) ?: throw RootEntityNotFoundException(id)
         entity.deleted = true
     }
 }

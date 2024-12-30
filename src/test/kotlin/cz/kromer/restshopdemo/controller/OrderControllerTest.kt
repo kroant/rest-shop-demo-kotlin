@@ -48,11 +48,21 @@ class OrderControllerTest @Autowired constructor(
         }
         assertThat(response).satisfiesExactly(
             {
-                assertThat(it.id).isEqualTo(UUID.fromString("27408323-1031-4658-8995-7ecff8f2b26f"))
-                assertThat(it.state).isSameAs(CANCELLED)
-                assertThat(it.price).isEqualByComparingTo("0")
-                assertThat(it.createdOn).isEqualTo("2022-01-15T06:29:59Z")
-                assertThat(it.items).isEmpty()
+                assertThat(it.id).isEqualTo(UUID.fromString("b3a48eee-65a4-431b-a11a-e770a7f0ba8b"))
+                assertThat(it.state).isSameAs(NEW)
+                assertThat(it.price).isEqualByComparingTo("787")
+                assertThat(it.createdOn).isEqualTo("2022-01-05T16:58:46Z")
+                assertThat(it.items).satisfiesExactly(
+                    { item ->
+                        assertThat(item?.product?.id).isEqualTo(MILK_1_L_PRODUCT_ID)
+                        assertThat(item?.product?.name).isEqualTo("Milk 1 l")
+                        assertThat(item?.amount).isEqualByComparingTo("2")
+                    }, { item ->
+                        assertThat(item?.product?.id).isEqualTo(CASHEW_NUTS_PRODUCT_ID)
+                        assertThat(item?.product?.name).isEqualTo("Cashew Nuts")
+                        assertThat(item?.amount).isEqualByComparingTo("2500")
+                    }
+                )
             }, {
                 assertThat(it.id).isEqualTo(UUID.fromString("fa254654-bdbc-431b-8b9e-f6bf34540ee9"))
                 assertThat(it.state).isSameAs(NEW)
@@ -67,22 +77,6 @@ class OrderControllerTest @Autowired constructor(
                         assertThat(item?.product?.id).isEqualTo(CASHEW_NUTS_PRODUCT_ID)
                         assertThat(item?.product?.name).isEqualTo("Cashew Nuts")
                         assertThat(item?.amount).isEqualByComparingTo("500")
-                    }
-                )
-            }, {
-                assertThat(it.id).isEqualTo(UUID.fromString("b3a48eee-65a4-431b-a11a-e770a7f0ba8b"))
-                assertThat(it.state).isSameAs(NEW)
-                assertThat(it.price).isEqualByComparingTo("787")
-                assertThat(it.createdOn).isEqualTo("2022-01-05T16:58:46Z")
-                assertThat(it.items).satisfiesExactly(
-                    { item ->
-                        assertThat(item?.product?.id).isEqualTo(MILK_1_L_PRODUCT_ID)
-                        assertThat(item?.product?.name).isEqualTo("Milk 1 l")
-                        assertThat(item?.amount).isEqualByComparingTo("2")
-                    }, { item ->
-                        assertThat(item?.product?.id).isEqualTo(CASHEW_NUTS_PRODUCT_ID)
-                        assertThat(item?.product?.name).isEqualTo("Cashew Nuts")
-                        assertThat(item?.amount).isEqualByComparingTo("2500")
                     }
                 )
             }, {
@@ -105,6 +99,12 @@ class OrderControllerTest @Autowired constructor(
                         assertThat(item?.amount).isEqualByComparingTo("300")
                     }
                 )
+            }, {
+                assertThat(it.id).isEqualTo(UUID.fromString("27408323-1031-4658-8995-7ecff8f2b26f"))
+                assertThat(it.state).isSameAs(CANCELLED)
+                assertThat(it.price).isEqualByComparingTo("0")
+                assertThat(it.createdOn).isEqualTo("2022-01-15T06:29:59Z")
+                assertThat(it.items).isEmpty()
             }
         )
     }

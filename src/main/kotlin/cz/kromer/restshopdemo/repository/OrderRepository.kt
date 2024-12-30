@@ -17,6 +17,8 @@ interface OrderRepository : JpaRepository<Order, UUID> {
     @QueryHints(value = [QueryHint(name = JAKARTA_LOCK_TIMEOUT, value = "2000")])
     fun findAndLockById(id: UUID): Order?
 
+    fun findAllByOrderByStateAscCreatedOnDesc(): List<Order>
+
     @Query("select o.id from Order o where o.createdOn < :before and o.state = 'NEW'")
     fun findNewOrdersBefore(before: Instant): List<UUID>
 }

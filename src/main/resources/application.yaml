@@ -2,12 +2,14 @@ server:
   servlet:
     context-path: /rest-shop-demo
 spring:
+  datasource:
+    url: jdbc:h2:mem:demodb
   jpa:
     open-in-view: false
     show-sql: false
     hibernate.ddl-auto: none
-  datasource:
-    url: jdbc:h2:mem:demodb
+  web:
+    locale: en
 app:
   scheduling:
     order-cancellation:

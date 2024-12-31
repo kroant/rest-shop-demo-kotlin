@@ -7,11 +7,18 @@ import cz.kromer.restshopdemo.dto.error.ErrorDetailValueType.VALIDATION_CODE
 import cz.kromer.restshopdemo.dto.error.ErrorResponseCode.ENTITY_NOT_FOUND
 import cz.kromer.restshopdemo.dto.error.ErrorResponseCode.REQUEST_VALIDATION_ERROR
 import cz.kromer.restshopdemo.dto.error.ErrorResponseDto
+import cz.kromer.restshopdemo.dto.validation.ProductStockMaxScale
 import io.restassured.http.ContentType.JSON
 import io.restassured.module.kotlin.extensions.Extract
 import io.restassured.module.kotlin.extensions.Given
 import io.restassured.module.kotlin.extensions.Then
 import io.restassured.module.kotlin.extensions.When
+import jakarta.validation.constraints.Digits
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
+import jakarta.validation.constraints.Pattern
+import jakarta.validation.constraints.Positive
+import jakarta.validation.constraints.Size
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus.BAD_REQUEST
@@ -79,27 +86,39 @@ class ProductControllerValidationTest : SpringTest() {
             {
                 assertThat(it.field).isEqualTo("name")
                 assertThat(it.message).startsWith("must match")
-                assertThat(it.values).satisfiesExactly({ detailValue -> assertThat(detailValue.value).isEqualTo("Pattern") })
+                assertThat(it.values).satisfiesExactly({ detailValue ->
+                    assertThat(detailValue.value).isEqualTo(Pattern::class.simpleName)
+                })
             }, {
                 assertThat(it.field).isEqualTo("name")
                 assertThat(it.message).isEqualTo("must not be blank")
-                assertThat(it.values).satisfiesExactly({ detailValue -> assertThat(detailValue.value).isEqualTo("NotBlank") })
+                assertThat(it.values).satisfiesExactly({ detailValue ->
+                    assertThat(detailValue.value).isEqualTo(NotBlank::class.simpleName)
+                })
             }, {
                 assertThat(it.field).isEqualTo("name")
                 assertThat(it.message).startsWith("size must be between 0 and")
-                assertThat(it.values).satisfiesExactly({ detailValue -> assertThat(detailValue.value).isEqualTo("Size") })
+                assertThat(it.values).satisfiesExactly({ detailValue ->
+                    assertThat(detailValue.value).isEqualTo(Size::class.simpleName)
+                })
             }, {
                 assertThat(it.field).isEqualTo("unit")
                 assertThat(it.message).isEqualTo("must not be null")
-                assertThat(it.values).satisfiesExactly({ detailValue -> assertThat(detailValue.value).isEqualTo("NotNull") })
+                assertThat(it.values).satisfiesExactly({ detailValue ->
+                    assertThat(detailValue.value).isEqualTo(NotNull::class.simpleName)
+                })
             }, {
                 assertThat(it.field).isEqualTo("price")
                 assertThat(it.message).isEqualTo("must be greater than 0")
-                assertThat(it.values).satisfiesExactly({ detailValue -> assertThat(detailValue.value).isEqualTo("Positive") })
+                assertThat(it.values).satisfiesExactly({ detailValue ->
+                    assertThat(detailValue.value).isEqualTo(Positive::class.simpleName)
+                })
             }, {
                 assertThat(it.field).isEqualTo("stock")
                 assertThat(it.message).startsWith("numeric value out of bounds")
-                assertThat(it.values).satisfiesExactly({ detailValue -> assertThat(detailValue.value).isEqualTo("Digits") })
+                assertThat(it.values).satisfiesExactly({ detailValue ->
+                    assertThat(detailValue.value).isEqualTo(Digits::class.simpleName)
+                })
             }
         )
     }
@@ -130,7 +149,7 @@ class ProductControllerValidationTest : SpringTest() {
             assertThat(it.message).isEqualTo("product stock scale must be less or equal to unit max scale")
             assertThat(it.values).satisfiesExactly({ detailValue ->
                 assertThat(detailValue.type).isSameAs(VALIDATION_CODE)
-                assertThat(detailValue.value).isEqualTo("ProductStockMaxScale")
+                assertThat(detailValue.value).isEqualTo(ProductStockMaxScale::class.simpleName)
             })
         })
     }

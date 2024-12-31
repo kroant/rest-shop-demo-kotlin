@@ -21,6 +21,7 @@ import cz.kromer.restshopdemo.dto.error.ErrorResponseCode.ILLEGAL_ORDER_STATE
 import cz.kromer.restshopdemo.dto.error.ErrorResponseCode.PRODUCT_STOCK_SHORTAGE
 import cz.kromer.restshopdemo.dto.error.ErrorResponseCode.REQUEST_VALIDATION_ERROR
 import cz.kromer.restshopdemo.dto.error.ErrorResponseDto
+import cz.kromer.restshopdemo.dto.validation.UniqueOrderProduct
 import cz.kromer.restshopdemo.service.OrderService
 import cz.kromer.restshopdemo.service.ProductService
 import io.restassured.http.ContentType.JSON
@@ -28,6 +29,7 @@ import io.restassured.module.kotlin.extensions.Extract
 import io.restassured.module.kotlin.extensions.Given
 import io.restassured.module.kotlin.extensions.Then
 import io.restassured.module.kotlin.extensions.When
+import jakarta.validation.constraints.NotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -66,7 +68,7 @@ class OrderControllerValidationTest @Autowired constructor(
             assertThat(it.message).isEqualTo("must not be null")
             assertThat(it.values).satisfiesExactly({ detailValue ->
                 assertThat(detailValue.type).isSameAs(VALIDATION_CODE)
-                assertThat(detailValue.value).isEqualTo("NotNull")
+                assertThat(detailValue.value).isEqualTo(NotNull::class.simpleName)
             })
         })
     }
@@ -97,7 +99,7 @@ class OrderControllerValidationTest @Autowired constructor(
             assertThat(it.message).isEqualTo("must not be null")
             assertThat(it.values).satisfiesExactly({ detailValue ->
                 assertThat(detailValue.type).isSameAs(VALIDATION_CODE)
-                assertThat(detailValue.value).isEqualTo("NotNull")
+                assertThat(detailValue.value).isEqualTo(NotNull::class.simpleName)
             })
         })
     }
@@ -127,7 +129,7 @@ class OrderControllerValidationTest @Autowired constructor(
             assertThat(it.message).isEqualTo("product must be unique")
             assertThat(it.values).satisfiesExactly({ detailValue ->
                 assertThat(detailValue.type).isSameAs(VALIDATION_CODE)
-                assertThat(detailValue.value).isEqualTo("UniqueOrderProduct")
+                assertThat(detailValue.value).isEqualTo(UniqueOrderProduct::class.simpleName)
             })
         })
     }

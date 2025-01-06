@@ -21,7 +21,7 @@ class SpringTest {
     protected lateinit var clock: Clock
 
     @LocalServerPort
-    protected var port: Int = 0
+    private var port: Int = 0
 
     @BeforeEach
     protected fun setup() {

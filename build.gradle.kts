@@ -32,10 +32,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.retry:spring-retry:2.0.11")
 
-    implementation("net.javacrumbs.shedlock:shedlock-spring:6.0.2")
-    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:6.0.2")
+    implementation("net.javacrumbs.shedlock:shedlock-spring:6.2.0")
+    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:6.2.0")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3")
 
     // Newer version of HikariCP required because of SQLTimeoutException closes connection.
     // https://github.com/brettwooldridge/HikariCP/issues/1388

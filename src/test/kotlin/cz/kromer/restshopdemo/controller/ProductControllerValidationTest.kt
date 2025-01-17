@@ -17,7 +17,7 @@ import jakarta.validation.constraints.Digits
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Pattern
-import jakarta.validation.constraints.Positive
+import jakarta.validation.constraints.PositiveOrZero
 import jakarta.validation.constraints.Size
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -109,9 +109,9 @@ class ProductControllerValidationTest : SpringTest() {
                 })
             }, {
                 assertThat(it.field).isEqualTo("price")
-                assertThat(it.message).isEqualTo("must be greater than 0")
+                assertThat(it.message).isEqualTo("must be greater than or equal to 0")
                 assertThat(it.values).satisfiesExactly({ detailValue ->
-                    assertThat(detailValue.value).isEqualTo(Positive::class.simpleName)
+                    assertThat(detailValue.value).isEqualTo(PositiveOrZero::class.simpleName)
                 })
             }, {
                 assertThat(it.field).isEqualTo("stock")

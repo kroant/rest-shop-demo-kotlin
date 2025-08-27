@@ -1,10 +1,10 @@
 plugins {
-    id("org.springframework.boot") version "3.4.1"
+    id("org.springframework.boot") version "3.5.5"
     id("io.spring.dependency-management") version "1.1.7"
-    kotlin("jvm") version "2.1.0"
-    kotlin("plugin.spring") version "2.1.0"
-    kotlin("plugin.jpa") version "2.1.0"
-    kotlin("kapt") version "2.1.0"
+    kotlin("jvm") version "2.2.10"
+    kotlin("plugin.spring") version "2.2.10"
+    kotlin("plugin.jpa") version "2.2.10"
+    kotlin("kapt") version "2.2.10"
     jacoco
 }
 
@@ -30,25 +30,22 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.retry:spring-retry:2.0.11")
+    implementation("org.springframework.retry:spring-retry")
 
-    implementation("net.javacrumbs.shedlock:shedlock-spring:6.2.0")
-    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:6.2.0")
+    implementation("net.javacrumbs.shedlock:shedlock-spring:6.10.0")
+    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:6.10.0")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.3")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.11")
 
-    // Newer version of HikariCP required because of SQLTimeoutException closes connection.
-    // https://github.com/brettwooldridge/HikariCP/issues/1388
-    implementation("com.zaxxer:HikariCP:6.2.1")
-    runtimeOnly("com.h2database:h2:2.3.232")
+    runtimeOnly("com.h2database:h2")
 
     compileOnly("org.mapstruct:mapstruct:1.6.3")
     kapt("org.mapstruct:mapstruct-processor:1.6.3")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("io.rest-assured:kotlin-extensions:5.5.0")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
+    testImplementation("io.rest-assured:kotlin-extensions")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.0.0")
 }
 
 kapt {
